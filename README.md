@@ -140,6 +140,128 @@ Download the generated artifact:
 curl http://localhost:8000/artifacts/<artifact_id>
 ```
 
+
+## Local demo transcript
+
+The default local path uses the deterministic mock provider, so the service can be exercised without network access, quota usage, or API keys.
+
+Start the API server:
+
+```bash
+.venv/bin/uvicorn paragraph_summary_service.api.app:create_app --factory --reload
+```
+
+Check service health:
+
+```bash
+curl -sS http://localhost:8000/health | jq
+```
+
+Example response:
+
+```json
+{
+  "status": "ok",
+  "service": "Paragraph Summary Service",
+  "version": "0.1.1",
+  "provider_default": "mock",
+  "external_provider_calls_enabled": false
+}
+```
+
+Generate paragraph summary artifacts from canonical DeepReader-shaped records:
+
+```bash
+curl -sS -X POST http://localhost:8000/paragraph-summaries \
+  -H "Content-Type: application/json" \
+  -d @examples/paragraph_request.json | jq
+```
+
+First run example:
+
+```json
+{
+  "artifact_id": "artifact_doc_001_6204e91faa92_1782289345276",
+  "document_id": "doc_001",
+  "output_path": "output/paragraph_summaries/doc_001.paragraph_summaries.jsonl",
+  "records_received": 2,
+  "records_completed": 2,
+  "records_failed": 0,
+  "cache_hits": 0,
+  "provider": "mock",
+  "model": "mock-deterministic-v1",
+  "template_version": "paragraph_sentence_batch_v1",
+  "usage": {
+    "input_tokens": 66,
+    "output_tokens": 42,
+    "total_tokens": 108,
+    "estimated_cost_usd": 0.0
+  },
+  "batches_processed": 1
+}
+```
+
+Inspect the generated JSONL sidecar artifact:
+
+```bash
+cat output/paragraph_summaries/doc_001.paragraph_summaries.jsonl | jq -c .
+```
+
+Example JSONL line:
+
+```json
+{
+  "cache_hit": false,
+  "document_id": "doc_001",
+  "error_code": null,
+  "input_text_hash": "sha256:a9dc3322bf37fa60292b5a71d4e675de3b80a9e2a12b7cb05f3509b666ed4546",
+  "metadata": {
+    "page": 1,
+    "section": "Safety Model"
+  },
+  "model": "mock-deterministic-v1",
+  "provenance": "deepreader",
+  "provider": "mock",
+  "record_id": "doc_001/page_0001/para_0001",
+  "source_ref": "page 1, paragraph 1",
+  "status": "completed",
+  "summary": "The service must not log raw source text.",
+  "summary_style": "paragraph_sentence",
+  "template_version": "paragraph_sentence_batch_v1",
+  "usage": {
+    "estimated_cost_usd": 0.0,
+    "input_tokens": 33,
+    "output_tokens": 21,
+    "total_tokens": 54
+  }
+}
+```
+
+Run the same request again to demonstrate cache reuse:
+
+```bash
+curl -sS -X POST http://localhost:8000/paragraph-summaries \
+  -H "Content-Type: application/json" \
+  -d @examples/paragraph_request.json | jq
+```
+
+Cache-hit response excerpt:
+
+```json
+{
+  "records_received": 2,
+  "records_completed": 2,
+  "records_failed": 0,
+  "cache_hits": 2,
+  "provider": "mock",
+  "model": "mock-deterministic-v1",
+  "template_version": "paragraph_sentence_batch_v1",
+  "batches_processed": 0
+}
+```
+
+The artifact contains stable IDs, hashes, summaries, provenance, provider/model details, status, usage, and redacted metadata. It does not include raw paragraph text.
+
 ## Gemini mode
 
 Create `.env` from `.env.example`, then enable Gemini intentionally:
