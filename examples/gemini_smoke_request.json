@@ -1,0 +1,19 @@
+{
+  "document_id": "gemini_smoke_001",
+  "records": [
+    {
+      "record_id": "gemini_smoke_001/page_0001/para_0001",
+      "source_ref": "page 1, paragraph 1",
+      "text": "Stable paragraph identifiers let retrieval systems attach generated summaries to the original source text without weakening citation provenance.",
+      "checksum": "sha256:manual-smoke-placeholder",
+      "metadata": {
+        "page": 1,
+        "section": "Smoke Test"
+      },
+      "provenance": "deepreader"
+    }
+  ],
+  "provider": "gemini",
+  "model": "gemini-2.5-flash-lite",
+  "template_version": "paragraph_sentence_batch_v1"
+}
