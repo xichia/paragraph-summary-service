@@ -21,7 +21,7 @@ class Settings(BaseSettings):
     token_chars_per_token: int = Field(default=4, ge=1)
     redaction_version: str = "basic_redaction_v1"
     gemini_api_key: str | None = None
-    gemini_model: str = "gemini-2.5-flash-lite"
+    gemini_model: str = "gemini-3.1-flash-lite"
     gemini_input_tpm_limit: int = 250_000
     gemini_safe_input_token_target: int = 225_000
     gemini_requests_per_minute: int = 1

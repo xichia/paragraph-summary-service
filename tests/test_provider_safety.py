@@ -103,8 +103,9 @@ def test_gemini_provider_uses_real_path_after_explicit_opt_in(tmp_path, monkeypa
     assert calls["timeout"] == settings.gemini_timeout_seconds
     assert calls["payload"]["generationConfig"]["temperature"] == 0.0
     assert result.results[0].summary == "Text."
+    assert result.results[0].status == "completed"
     assert result.usage.total_tokens == 5
 
 
 def _gemini_json_response() -> str:
-    return '{"summaries":[{"record_id":"r1","summary":"Text.","status":"completed"}]}'
+    return '{"summaries":[{"record_id":"r1","summary":"Text.","status":"success"}]}'

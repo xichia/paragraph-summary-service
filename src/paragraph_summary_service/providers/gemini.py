@@ -19,7 +19,7 @@ from paragraph_summary_service.providers.base import ProviderNotEnabledError, Pr
 
 class GeminiProvider:
     name = "gemini"
-    default_model = "gemini-2.5-flash-lite"
+    default_model = "gemini-3.1-flash-lite"
 
     def __init__(self, settings: Settings):
         self.settings = settings
@@ -98,7 +98,7 @@ def _parse_results(
         if record_id not in expected_record_ids:
             raise ProviderResponseError(f"Gemini returned unexpected record_id: {record_id}")
         summary = str(item.get("summary", "")).strip()
-        status = str(item.get("status", "completed"))
+        status = _normalize_status(item.get("status", "completed"))
         if not summary and status == "completed":
             raise ProviderResponseError(f"Gemini returned empty summary for {record_id}")
         seen.add(record_id)
@@ -107,6 +107,13 @@ def _parse_results(
     if missing:
         raise ProviderResponseError(f"Gemini response missing record_ids: {sorted(missing)[:3]}")
     return results
+
+
+def _normalize_status(status: Any) -> str:
+    normalized = str(status).strip().lower()
+    if normalized in {"completed", "success", "succeeded", "ok"}:
+        return "completed"
+    return normalized
 
 
 def _parse_usage(data: dict[str, Any]) -> Usage:
