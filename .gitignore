@@ -23,3 +23,5 @@ __pycache__/
 *.sqlite
 *.db
 .env
+
+.DS_Store
