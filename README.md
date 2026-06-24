@@ -48,7 +48,7 @@ Production-style Gemini mode must be explicit:
 LLM_PROVIDER=gemini
 ALLOW_EXTERNAL_PROVIDER_CALLS=true
 GEMINI_API_KEY=your_authorised_key_here
-GEMINI_MODEL=gemini-2.5-flash-lite
+GEMINI_MODEL=gemini-3.1-flash-lite
 GEMINI_INPUT_TPM_LIMIT=250000
 GEMINI_SAFE_INPUT_TOKEN_TARGET=225000
 GEMINI_REQUESTS_PER_MINUTE=1
@@ -101,7 +101,7 @@ Example line:
   "summary_style": "paragraph_sentence",
   "template_version": "paragraph_sentence_batch_v1",
   "provider": "gemini",
-  "model": "gemini-2.5-flash-lite",
+  "model": "gemini-3.1-flash-lite",
   "cache_hit": false,
   "status": "completed",
   "provenance": "deepreader"
@@ -274,7 +274,7 @@ cp .env.example .env
 LLM_PROVIDER=gemini
 ALLOW_EXTERNAL_PROVIDER_CALLS=true
 GEMINI_API_KEY=your_authorised_key_here
-GEMINI_MODEL=gemini-2.5-flash-lite
+GEMINI_MODEL=gemini-3.1-flash-lite
 GEMINI_INPUT_TPM_LIMIT=250000
 GEMINI_SAFE_INPUT_TOKEN_TARGET=225000
 GEMINI_REQUESTS_PER_MINUTE=1
@@ -300,7 +300,7 @@ The current implementation packs records by estimated input tokens and targets `
     }
   ],
   "provider": "gemini",
-  "model": "gemini-2.5-flash-lite",
+  "model": "gemini-3.1-flash-lite",
   "template_version": "paragraph_sentence_batch_v1"
 }
 ```
@@ -319,7 +319,7 @@ For offline local testing, use `provider: "mock"` and `model: "mock-deterministi
   "records_failed": 0,
   "cache_hits": 0,
   "provider": "gemini",
-  "model": "gemini-2.5-flash-lite",
+  "model": "gemini-3.1-flash-lite",
   "template_version": "paragraph_sentence_batch_v1",
   "usage": {
     "input_tokens": 12,

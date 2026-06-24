@@ -23,7 +23,7 @@ Set environment variables:
 export LLM_PROVIDER=gemini
 export ALLOW_EXTERNAL_PROVIDER_CALLS=true
 export GEMINI_API_KEY="your_authorised_key_here"
-export GEMINI_MODEL=gemini-2.5-flash-lite
+export GEMINI_MODEL=gemini-3.1-flash-lite
 export GEMINI_REQUESTS_PER_MINUTE=1
 export GEMINI_INPUT_TPM_LIMIT=250000
 export GEMINI_SAFE_INPUT_TOKEN_TARGET=225000
@@ -46,7 +46,7 @@ Expected result:
 - records_completed is 1
 - records_failed is 0
 - provider is gemini
-- model is gemini-2.5-flash-lite
+- model is gemini-3.1-flash-lite
 - batches_processed is 1 on the first uncached run
 
 ## Inspect the artifact
