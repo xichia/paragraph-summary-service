@@ -1,0 +1,25 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.env
+.local/
+output/
+dist/
+build/
+*.egg-info/
+
+# local/runtime artifacts
+.venv/
+.local/
+output/
+.pytest_cache/
+.ruff_cache/
+__pycache__/
+*.pyc
+*.sqlite
+*.db
+.env

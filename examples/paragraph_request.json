@@ -1,0 +1,21 @@
+{
+  "document_id": "doc_001",
+  "records": [
+    {
+      "record_id": "doc_001/page_0001/para_0001",
+      "source_ref": "page 1, paragraph 1",
+      "text": "The service must not log raw source text. It should use hashes, record IDs, provider names, model names, and timing metadata instead.",
+      "checksum": "sha256:example",
+      "metadata": {"page": 1, "section": "Safety Model"}
+    },
+    {
+      "record_id": "doc_001/page_0001/para_0002",
+      "source_ref": "page 1, paragraph 2",
+      "text": "One-sentence paragraph summaries help retrieval systems match conceptual queries against dense or technical source paragraphs.",
+      "metadata": {"page": 1, "section": "Retrieval Enhancement"}
+    }
+  ],
+  "provider": "mock",
+  "model": "mock-deterministic-v1",
+  "template_version": "paragraph_sentence_batch_v1"
+}
