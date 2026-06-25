@@ -362,3 +362,7 @@ docker compose up --build
 ```
 
 See `docs/architecture.md`, `docs/gemini-provider.md`, and `docs/deepreader-integration.md` for design notes.
+
+## License
+
+This project is licensed under the MIT License. See [LICENSE](LICENSE).
