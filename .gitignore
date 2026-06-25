@@ -27,3 +27,19 @@ __pycache__/
 .DS_Store
 
 .DS_Store
+# Local secrets
+.env.local
+.env.*.local
+# Local runtime artifacts
+*.sqlite3
+*.log
+# OS/editor metadata
+.vscode/
+.idea/
+# Python
+.mypy_cache/
+venv/
+# Paragraph summary artifacts
+artifacts/
+tmp/
+cache/
