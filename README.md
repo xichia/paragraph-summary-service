@@ -6,7 +6,9 @@ DeepReader keeps the original paragraph records as the citation-grade evidence. 
 
 Gemini is the **primary real provider path** for the project. The deterministic mock provider exists so the API, cache, artifact writer, redaction, batching, tests, CI, and local demos can run without network access or API keys.
 
-## Product goal
+## Companion service boundaries
+
+Paragraph Summary Service is **DeepReader's companion summary execution service**, not a RAG/search/dashboard/ingestion system.
 
 ```text
 DeepReader stable paragraph records
@@ -16,13 +18,38 @@ DeepReader stable paragraph records
 → DeepReader indexes original text + summaries
 ```
 
-The service is intentionally narrow:
+### What Paragraph Summary Service owns
 
-- DeepReader owns canonical ingestion, stable paragraph records, source references, retrieval,
-  citations, evidence packets, and dashboard inspection.
-- Paragraph Summary Service owns Gemini-backed paragraph summarisation, provider abstraction,
-  prompt templates, text-hash caching, redaction hooks, usage accounting, token-aware packing,
-  artifact writing, and safe external-provider configuration.
+- provider/mock paragraph summary generation execution
+- prompt/provider abstraction
+- batching (token-aware packing)
+- redaction (input text + metadata)
+- cache behavior (text-hash-based SQLite cache)
+- usage metadata (token counts, estimated cost)
+- provider safety (opt-in external calls, safe defaults)
+- JSONL/sidecar artifact generation
+
+### What Paragraph Summary Service does NOT own
+
+This service is intentionally narrow. DeepReader remains the canonical owner of:
+
+- document ingestion and source records
+- retrieval, search, and RAG pipelines
+- QA citations and evidence packets
+- frontend dashboard and inspection tooling
+- summary indexing and secondary field management
+
+### Provider safety default
+
+Live provider calls are opt-in. The safe default for reviewers, tests, and CI:
+
+```env
+LLM_PROVIDER=mock
+ALLOW_EXTERNAL_PROVIDER_CALLS=false
+```
+
+This keeps the project reviewable without credentials, network access, or quota. See
+[docs/DEMO_WORKFLOW.md](docs/DEMO_WORKFLOW.md) for the reviewer-safe offline workflow.
 
 ## Provider model
 

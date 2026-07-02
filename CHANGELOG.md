@@ -1,5 +1,25 @@
 # Changelog
 
+## Unreleased (v0.2 planning/docs)
+
+- Clarified Paragraph Summary Service as DeepReader's companion summary
+  execution service with explicit ownership boundaries (not a RAG/search/
+  dashboard/ingestion system).
+- Added docs/SUMMARY_JOB_LIFECYCLE.md design document defining lifecycle
+  statuses, terminal/non-terminal states, partial success, retry semantics,
+  and recovery patterns.
+- Added docs/PROVIDER_ERROR_SEMANTICS.md design document defining retryable
+  vs non-retryable provider error categories, error_code naming conventions,
+  and condition-to-code mapping.
+- Added docs/ARTIFACT_PROVENANCE.md documenting current and proposed artifact
+  metadata fields, identification format, and schema stability expectations.
+- Added docs/DEMO_WORKFLOW.md with a reviewer-safe offline/mock workflow that
+  does not require service startup, live provider calls, OpenStax, or secrets
+  inspection.
+- Added docs/validation-log.md recording the validation commands run and
+  explicitly confirming what was not performed.
+- No runtime code, provider, cache, or default changes in this pass.
+
 ## 0.1.1
 
 - Reframed the project as Gemini-backed one-sentence paragraph summary artifact generation for DeepReader retrieval enhancement.
