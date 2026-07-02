@@ -48,6 +48,7 @@ def test_raw_paragraph_text_stays_out_of_artifact_cache_metadata(tmp_path, caplo
 
     assert artifact_lines == [
         {
+            "artifact_id": artifact_lines[0]["artifact_id"],
             "cache_hit": False,
             "document_id": "doc_privacy",
             "error_code": None,
@@ -69,6 +70,7 @@ def test_raw_paragraph_text_stays_out_of_artifact_cache_metadata(tmp_path, caplo
             "summary": "Stable retrieval sentence.",
             "summary_style": "paragraph_sentence",
             "template_version": "paragraph_sentence_batch_v1",
+            "runtime_mode": "mock",
             "usage": artifact_lines[0]["usage"],
         }
     ]

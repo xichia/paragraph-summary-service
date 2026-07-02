@@ -78,6 +78,11 @@ class ParagraphSummaryService:
         provider = get_provider(provider_name, self.settings)
         model = resolve_model(provider, requested_model)
         artifact_id = make_artifact_id(document_id, [record.record_id for record in records])
+        runtime_mode = (
+            "mock" if provider.name == "mock" else
+            "live" if self.settings.allow_external_provider_calls else
+            "offline"
+        )
         summaries: list[ParagraphSummary] = []
         pending: list[tuple[ParagraphRecord, str, str]] = []
         total_usage = Usage()
@@ -101,6 +106,7 @@ class ParagraphSummaryService:
                 total_usage = total_usage.plus(usage)
                 summaries.append(
                     ParagraphSummary(
+                        artifact_id=artifact_id,
                         document_id=document_id,
                         record_id=record.record_id,
                         source_ref=record.source_ref,
@@ -113,6 +119,7 @@ class ParagraphSummaryService:
                         cache_hit=True,
                         status="completed",
                         usage=usage,
+                        runtime_mode=runtime_mode,
                         metadata=redact_metadata(record.metadata, raw_text=record.text),
                         provenance=record.provenance,
                     )
@@ -171,6 +178,7 @@ class ParagraphSummaryService:
             usage = usage_by_record_id.get(record_id, Usage())
             total_usage = total_usage.plus(usage)
             summary = ParagraphSummary(
+                artifact_id=artifact_id,
                 document_id=document_id,
                 record_id=record.record_id,
                 source_ref=record.source_ref,
@@ -183,6 +191,7 @@ class ParagraphSummaryService:
                 cache_hit=False,
                 status=status,
                 usage=usage,
+                runtime_mode=runtime_mode,
                 metadata=redact_metadata(record.metadata, raw_text=record.text),
                 provenance=record.provenance,
                 error_code=error_code,

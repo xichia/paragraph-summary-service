@@ -44,6 +44,10 @@ def test_paragraph_endpoint_creates_jsonl_artifact(client):
     assert lines[0]["record_id"] == "doc_001/page_0001/para_0001"
     assert "text" not in lines[0]
     assert lines[0]["summary"].endswith(".")
+    assert lines[0]["artifact_id"] == data["artifact_id"]
+    assert lines[0]["runtime_mode"] == "mock"
+    assert lines[1]["artifact_id"] == data["artifact_id"]
+    assert lines[1]["runtime_mode"] == "mock"
 
 
 def test_second_request_is_cache_hit(client):

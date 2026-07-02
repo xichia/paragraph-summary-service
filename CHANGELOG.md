@@ -1,6 +1,15 @@
 # Changelog
 
-## Unreleased (v0.2 planning/docs)
+## Unreleased
+
+- Added `artifact_id` to every JSONL artifact line (previously only in the response envelope).
+- Added `runtime_mode` to every JSONL artifact line (`"mock"`, `"live"`, or `"offline"`),
+  derived from existing provider/config state without runtime changes.
+- Updated `docs/ARTIFACT_PROVENANCE.md` to reflect the two newly implemented fields.
+- No changes to provider behavior, cache semantics, runtime defaults, existing field
+  names, types, or response model fields.
+
+## v0.2 planning/docs
 
 - Clarified Paragraph Summary Service as DeepReader's companion summary
   execution service with explicit ownership boundaries (not a RAG/search/

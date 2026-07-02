@@ -10,6 +10,7 @@ Every JSONL line in the generated artifact includes these fields
 
 | Field | Type | Always present | Description |
 |---|---|---|---|
+| `artifact_id` | string | Yes | Artifact identifier, matching the API response `artifact_id`. |
 | `document_id` | string | Yes | Identifier from the request. |
 | `record_id` | string | Yes | Canonical record identifier. |
 | `source_ref` | string | Yes | Human-readable source location. |
@@ -21,6 +22,7 @@ Every JSONL line in the generated artifact includes these fields
 | `model` | string | Yes | Model name (e.g. `"mock-deterministic-v1"`, `"gemini-3.1-flash-lite"`). |
 | `cache_hit` | boolean | Yes | Whether the result was served from cache. |
 | `status` | string | Yes | Record-level status (`"completed"` or `"failed"`). |
+| `runtime_mode` | string | Yes | Execution mode: `"mock"` (deterministic mock provider), `"live"` (real provider call), or `"offline"` (cached fallback). |
 | `error_code` | string or null | Yes | Error code if `status` is `"failed"`, else `null`. |
 | `usage` | object | Yes | Token and cost breakdown (see below). |
 | `metadata` | object or null | Depends | Redacted request metadata; may be `null`. |
@@ -62,8 +64,6 @@ targets:
 
 | Field | Rationale |
 |---|---|
-| `artifact_id` (in each JSONL line) | Currently only in the response envelope, not per-line. Would allow individual line provenance. |
-| `runtime_mode` (`mock`/`offline`/`live`) | Would distinguish mock, offline (cached), and live provider runs. |
 | `input_record_count` (per line) | Redundant with the envelope count, but useful for partial-artifact inspection. |
 | `records_skipped` / `records_cancelled` | Would accompany lifecycle status expansion (see [SUMMARY_JOB_LIFECYCLE.md](SUMMARY_JOB_LIFECYCLE.md)). |
 | `redaction_status` | Whether redaction was applied to the input text for this record. |

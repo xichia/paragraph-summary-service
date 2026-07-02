@@ -26,6 +26,7 @@ def write_jsonl_artifact(*, artifact_dir: Path, document_id: str,
 
 def _summary_to_line(summary: ParagraphSummary) -> dict:
     return {
+        "artifact_id": summary.artifact_id,
         "document_id": summary.document_id,
         "record_id": summary.record_id,
         "source_ref": summary.source_ref,
@@ -37,6 +38,7 @@ def _summary_to_line(summary: ParagraphSummary) -> dict:
         "model": summary.model,
         "cache_hit": summary.cache_hit,
         "status": summary.status,
+        "runtime_mode": summary.runtime_mode,
         "usage": summary.usage.__dict__,
         "metadata": summary.metadata,
         "provenance": summary.provenance,

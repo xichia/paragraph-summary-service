@@ -31,6 +31,7 @@ class ParagraphRecord:
 
 @dataclass(frozen=True)
 class ParagraphSummary:
+    artifact_id: str
     document_id: str
     record_id: str
     source_ref: str
@@ -43,6 +44,7 @@ class ParagraphSummary:
     cache_hit: bool
     status: str
     usage: Usage
+    runtime_mode: str
     metadata: dict[str, Any] = field(default_factory=dict)
     provenance: str = "deepreader"
     error_code: str | None = None

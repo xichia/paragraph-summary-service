@@ -83,4 +83,6 @@ def test_gemini_success_status_counts_as_completed(tmp_path, monkeypatch):
     assert result.response.model == "gemini-3.1-flash-lite"
     assert result.response.batches_processed == 1
     assert artifact_line["status"] == "completed"
+    assert artifact_line["artifact_id"] == result.response.artifact_id
+    assert artifact_line["runtime_mode"] == "live"
     assert '"status": "success"' not in artifact_text
