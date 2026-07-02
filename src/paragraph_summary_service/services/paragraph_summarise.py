@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from datetime import datetime, timezone
 
 from paragraph_summary_service.artifacts.ids import make_artifact_id
 from paragraph_summary_service.artifacts.writer import write_jsonl_artifact
@@ -250,10 +251,13 @@ class ParagraphSummaryService:
             records_received=len(records),
             records_completed=completed,
             records_failed=failed,
+            records_skipped=0,
             cache_hits=cache_hits,
             provider=provider.name,
             model=model,
             template_version=template_version,
+            runtime_mode=runtime_mode,
+            created_at=datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),  # noqa: UP017
             usage=UsageResponse(**total_usage.__dict__),
             batches_processed=batches_processed,
         )

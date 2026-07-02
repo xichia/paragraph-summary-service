@@ -50,10 +50,13 @@ metadata:
 | `records_received` | integer | Number of input records. |
 | `records_completed` | integer | Records with `status="completed"`. |
 | `records_failed` | integer | Records with `status="failed"`. |
+| `records_skipped` | integer | Records skipped before processing (always `0` in current implementation). |
 | `cache_hits` | integer | Count of cache-served results. |
 | `provider` | string | Provider used for the request. |
 | `model` | string | Model used for the request. |
 | `template_version` | string | Prompt template version. |
+| `runtime_mode` | string | Execution mode: `"mock"`, `"live"`, or `"offline"`. |
+| `created_at` | string | ISO 8601 UTC timestamp of artifact creation. |
 | `usage` | object | Aggregated usage across all records. |
 | `batches_processed` | integer | Number of provider batches sent. |
 

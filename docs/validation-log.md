@@ -104,3 +104,58 @@ python3 -m ruff check src tests
 - Secrets or `.env` inspection: **not performed**.
 - Runtime defaults / provider behavior / cache behavior changes: **none**.
 - API/CLI response schema fields: **not changed**.
+
+## v0.4 — Response status surface and safe cleanups
+
+Date: 2026-07-02
+
+### Scope
+
+Additive API/CLI response-model fields and regression test coverage. No runtime
+changes beyond response field additions.
+
+### Changes made
+
+- `src/paragraph_summary_service/models/responses.py` — added `created_at`,
+  `records_skipped`, and `runtime_mode` to `ParagraphSummaryArtifactResponse`.
+- `src/paragraph_summary_service/services/paragraph_summarise.py` — populates
+  the three new fields using existing state (`runtime_mode` already computed for
+  JSONL, `records_skipped` set to `0`, `created_at` from the current UTC time).
+- `tests/test_paragraph_endpoint_mock.py` — updated `test_response_metadata_shape`
+  to assert all 15 expected response keys, types, `records_skipped == 0`,
+  `runtime_mode == "mock"`, and `created_at` ending in `"Z"`.
+- `tests/test_gemini_status_normalization.py` — asserts `records_skipped == 0`
+  and `runtime_mode == "live"` in the response for the monkeypatched Gemini path.
+- `README.md` — updated both example responses (mock and Gemini) to include
+  `records_skipped`, `runtime_mode`, and `created_at`.
+- `CHANGELOG.md` — added v0.4 Unreleased entry; renamed previous Unreleased to
+  v0.3.
+- `docs/ARTIFACT_PROVENANCE.md` — added `records_skipped`, `runtime_mode`, and
+  `created_at` to the per-artifact response metadata table.
+- `.gitignore` — investigated `tmp/` and `cache/` patterns; neither currently
+  matches source directories (tracked files unaffected). No change made because
+  the intended target is not clearly distinguishable from source directories.
+
+### Validation commands run
+
+```
+git status --short
+git --no-pager log -8 --oneline --decorate
+python3 -m pytest
+python3 -m ruff check src tests
+```
+
+### Results
+
+- git status: working tree with planned changes.
+- pytest: all tests passed.
+- ruff: no lint errors.
+
+### What was NOT performed
+
+- Live Gemini/provider calls: **not performed**.
+- OpenStax validation: **not performed**.
+- Service startup: **not performed**.
+- Secrets or `.env` inspection: **not performed**.
+- Runtime defaults / provider behavior / cache behavior changes: **none**.
+- JSONL artifact schema changes: **none**.

@@ -77,15 +77,22 @@ def test_response_metadata_shape(client):
     assert isinstance(data["records_received"], int)
     assert isinstance(data["records_completed"], int)
     assert isinstance(data["records_failed"], int)
+    assert isinstance(data["records_skipped"], int)
     assert isinstance(data["cache_hits"], int)
     assert isinstance(data["provider"], str)
     assert isinstance(data["model"], str)
     assert isinstance(data["template_version"], str)
+    assert isinstance(data["runtime_mode"], str)
+    assert isinstance(data["created_at"], str)
     assert isinstance(data["usage"], dict)
     assert isinstance(data["batches_processed"], int)
+    assert data["records_skipped"] == 0
+    assert data["runtime_mode"] == "mock"
+    assert data["created_at"].endswith("Z")
     assert set(data.keys()) == {
         "artifact_id", "document_id", "output_path",
         "records_received", "records_completed", "records_failed",
-        "cache_hits", "provider", "model", "template_version",
+        "records_skipped", "cache_hits", "provider", "model",
+        "template_version", "runtime_mode", "created_at",
         "usage", "batches_processed",
     }

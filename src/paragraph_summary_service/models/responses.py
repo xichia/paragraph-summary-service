@@ -19,10 +19,13 @@ class ParagraphSummaryArtifactResponse(BaseModel):
     records_received: int
     records_completed: int
     records_failed: int
+    records_skipped: int
     cache_hits: int
     provider: str
     model: str
     template_version: str
+    runtime_mode: str
+    created_at: str
     usage: UsageResponse
     batches_processed: int
 

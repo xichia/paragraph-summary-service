@@ -2,6 +2,20 @@
 
 ## Unreleased
 
+- Added `created_at`, `records_skipped`, and `runtime_mode` fields to the
+  `ParagraphSummaryArtifactResponse` API/CLI response envelope.
+- `created_at` is an ISO 8601 UTC timestamp ending in `Z`, computed at response
+  construction time.
+- `records_skipped` is always `0` (no per-record skip behavior exists yet).
+- `runtime_mode` reuses the same value already written to JSONL artifact lines
+  (`"mock"`, `"live"`, or `"offline"`).
+- Updated response shape test, Gemini status test, and docs to reflect the new
+  response fields.
+- No changes to provider behavior, cache semantics, runtime defaults, existing
+  field names, types, or JSONL artifact schema.
+
+## v0.3
+
 - Added `artifact_id` to every JSONL artifact line (previously only in the response envelope).
 - Added `runtime_mode` to every JSONL artifact line (`"mock"`, `"live"`, or `"offline"`),
   derived from existing provider/config state without runtime changes.
