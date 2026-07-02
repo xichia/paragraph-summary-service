@@ -55,4 +55,37 @@ def test_second_request_is_cache_hit(client):
     assert first.status_code == 200
     second = client.post("/paragraph-summaries", json=_request())
     assert second.status_code == 200
-    assert second.json()["cache_hits"] == 2
+    data = second.json()
+    assert data["cache_hits"] == 2
+    path = Path(data["output_path"])
+    assert path.exists()
+    lines = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
+    assert len(lines) == 2
+    for line in lines:
+        assert line["cache_hit"] is True
+        assert line["artifact_id"] == data["artifact_id"]
+        assert line["runtime_mode"] == "mock"
+
+
+def test_response_metadata_shape(client):
+    response = client.post("/paragraph-summaries", json=_request())
+    assert response.status_code == 200
+    data = response.json()
+    assert isinstance(data["artifact_id"], str)
+    assert isinstance(data["document_id"], str)
+    assert isinstance(data["output_path"], str)
+    assert isinstance(data["records_received"], int)
+    assert isinstance(data["records_completed"], int)
+    assert isinstance(data["records_failed"], int)
+    assert isinstance(data["cache_hits"], int)
+    assert isinstance(data["provider"], str)
+    assert isinstance(data["model"], str)
+    assert isinstance(data["template_version"], str)
+    assert isinstance(data["usage"], dict)
+    assert isinstance(data["batches_processed"], int)
+    assert set(data.keys()) == {
+        "artifact_id", "document_id", "output_path",
+        "records_received", "records_completed", "records_failed",
+        "cache_hits", "provider", "model", "template_version",
+        "usage", "batches_processed",
+    }

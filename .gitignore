@@ -40,6 +40,6 @@ __pycache__/
 .mypy_cache/
 venv/
 # Paragraph summary artifacts
-artifacts/
+/output/artifacts/
 tmp/
 cache/

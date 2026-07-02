@@ -120,6 +120,7 @@ Example line:
 
 ```json
 {
+  "artifact_id": "artifact_doc_001_6204e91faa92_1782289345276",
   "document_id": "doc_001",
   "record_id": "doc_001/page_0001/para_0001",
   "source_ref": "page 1, paragraph 1",
@@ -131,6 +132,7 @@ Example line:
   "model": "gemini-3.1-flash-lite",
   "cache_hit": false,
   "status": "completed",
+  "runtime_mode": "mock",
   "provenance": "deepreader"
 }
 ```
@@ -238,6 +240,7 @@ Example JSONL line:
 
 ```json
 {
+  "artifact_id": "artifact_doc_001_6204e91faa92_1782289345276",
   "cache_hit": false,
   "document_id": "doc_001",
   "error_code": null,
@@ -250,6 +253,7 @@ Example JSONL line:
   "provenance": "deepreader",
   "provider": "mock",
   "record_id": "doc_001/page_0001/para_0001",
+  "runtime_mode": "mock",
   "source_ref": "page 1, paragraph 1",
   "status": "completed",
   "summary": "The service must not log raw source text.",

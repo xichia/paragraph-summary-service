@@ -57,16 +57,16 @@ Expected: no lint errors.
 
 ## 4. Review documentation
 
-Review the key design docs for the v0.2 alignment:
+Review the key design docs:
 
 | Document | Purpose |
 |---|---|
 | [architecture.md](architecture.md) | System architecture and boundaries |
 | [deepreader-adapter-contract.md](deepreader-adapter-contract.md) | Contract with DeepReader |
 | [deepreader-integration.md](deepreader-integration.md) | Integration notes |
+| [ARTIFACT_PROVENANCE.md](ARTIFACT_PROVENANCE.md) | Artifact metadata and provenance (current + proposed) |
 | [SUMMARY_JOB_LIFECYCLE.md](SUMMARY_JOB_LIFECYCLE.md) | Job lifecycle status semantics (design) |
 | [PROVIDER_ERROR_SEMANTICS.md](PROVIDER_ERROR_SEMANTICS.md) | Provider error categories (design) |
-| [ARTIFACT_PROVENANCE.md](ARTIFACT_PROVENANCE.md) | Artifact metadata and provenance |
 | [DEMO_WORKFLOW.md](DEMO_WORKFLOW.md) | This document |
 
 ## 5. Inspect example data
@@ -87,6 +87,17 @@ If the service was run previously and generated artifacts in `output/`:
 # List any existing artifacts
 ls -la output/paragraph_summaries/ 2>/dev/null || echo "No artifacts found (expected if service has not been started)"
 ```
+
+Each JSONL artifact line now includes:
+
+- `artifact_id` — unique artifact identifier, matching the API response.
+- `runtime_mode` — `"mock"`, `"live"`, or `"offline"`.
+- `cache_hit` — whether the result was served from cache.
+- `status` — record-level status (`"completed"` or `"failed"`).
+- `error_code` — error detail when `status` is `"failed"`, else `null`.
+
+Raw paragraph text is not written to artifacts by default. See
+[ARTIFACT_PROVENANCE.md](ARTIFACT_PROVENANCE.md) for the full field reference.
 
 ## 7. Explore source structure
 
